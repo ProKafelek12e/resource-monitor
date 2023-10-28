@@ -1,0 +1,8 @@
+{
+  "type": "module",
+  "dependencies": {
+    "os-utils": "^0.0.14",
+    "systeminformation": "^5.21.15",
+    "ws": "^8.14.2"
+  }
+}
