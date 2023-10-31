@@ -23,7 +23,7 @@ wss.on("connection", function connection(ws) {
       var totalmem = (os.totalmem()/1024/1024).toFixed(2)
       var freemem = (os.freemem()/1024/1204).toFixed(2)
       var usedmem = totalmem - freemem
-      var usedmemp = (usedmem/totalmem * 100).toFixed(2) + "%"
+      var usedmemp = (usedmem/totalmem * 100).toFixed(2)
       
       system_info.ram = {
         full:totalmem,
@@ -35,7 +35,7 @@ wss.on("connection", function connection(ws) {
       // CPU 
       //-------------------------------------------------
       
-      cpuStats(100, function(err, result) {
+      cpuStats(300, function(err, result) {
           if (err) {
             console.error(err);
             return;
@@ -49,7 +49,7 @@ wss.on("connection", function connection(ws) {
         
           var averageUsage = totalUsage / result.length;
       
-          system_info.cpu = averageUsage.toFixed(2) + "%"
+          system_info.cpu = averageUsage.toFixed(2)
           console.log(system_info)
           ws.send(JSON.stringify(system_info))
         });

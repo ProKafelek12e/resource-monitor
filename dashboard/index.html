@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+    <html>
+        <head>
+            <link rel="stylesheet" href="style.css">
+            <title>System Resource Monitor</title>
+        </head>
+        <body>
+            <div id="cpu-usage">CPU Usage: <span id="cpu-value">0%</span></div>
+            <div id="ram-usage">RAM Usage: <span id="ram-value">0%</span></div>
+            
+            <div id="dChartR" class="dChart">
+                <svg id="chartR" class="round" viewbox="0 0 100 100" width="200" height="200" data-percent="10">
+                    <circle cx="50" cy="50" r="40" />  
+                </svg>
+                <h1>RAM</h1>
+            </div>
+            <div id="dChartC" class="dChart">
+                <svg id="chartC" class="round" viewbox="0 0 100 100" width="200" height="200" data-percent="10">
+                    <circle cx="50" cy="50" r="40" />  
+                </svg>
+                <h1>CPU</h1>
+            </div>
+            
+            
+            <script src="app.js"></script>
+        </body>
+    </html>
