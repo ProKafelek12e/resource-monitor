@@ -17,6 +17,21 @@ wss.on("connection", function connection(ws) {
       var system_info = {}
 
       //-------------------------------------------------
+      // IP 
+      //-------------------------------------------------
+
+      const networkInterfaces = os.networkInterfaces();
+      
+      // Filter and find the local (internal) IP address
+      const localIpAddress = Object.keys(networkInterfaces)
+        .map((interfaceName) =>
+          networkInterfaces[interfaceName].find((info) => info.family === 'IPv4' && !info.internal)
+        )
+        .filter((info) => info !== undefined)[0].address;
+      
+      system_info.ip = localIpAddress
+
+      //-------------------------------------------------
       // RAM 
       //-------------------------------------------------
       
@@ -50,7 +65,6 @@ wss.on("connection", function connection(ws) {
           var averageUsage = totalUsage / result.length;
       
           system_info.cpu = averageUsage.toFixed(2)
-          console.log(system_info)
           ws.send(JSON.stringify(system_info))
         });
       
