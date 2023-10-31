@@ -3,7 +3,7 @@ import si from "systeminformation";
 import * as os from 'os'
 import * as osu from 'node-os-utils';
 import cpuStats from 'cpu-stats';
-
+import { exec } from 'child_process';
 const wss = new WebSocketServer({ port: 8080 });
 
 wss.on("connection", function connection(ws) {
@@ -15,6 +15,41 @@ wss.on("connection", function connection(ws) {
     try {
 
       var system_info = {}
+
+      //-------------------------------------------------
+      // DISK 
+      //-------------------------------------------------
+      
+      const path = 'C:'; // Change the path to the drive or directory you want to check
+
+      const command = `wmic logicaldisk where "DeviceID='${path}'" get Size,FreeSpace /value`;
+      
+      exec(command, (error, stdout) => {
+        if (error) {
+          console.error(error);
+          return;
+        }
+      
+        const lines = stdout.trim().split('\n');
+        const data = {};
+      
+        for (const line of lines) {
+          const [key, value] = line.split('=');
+          data[key.trim()] = value.trim();
+        }
+      
+        const totalSpaceGB = parseInt(data.Size, 10) / (1024 * 1024 * 1024);
+        const freeSpaceGB = parseInt(data.FreeSpace, 10) / (1024 * 1024 * 1024);
+        const usedSpaceGB = totalSpaceGB - freeSpaceGB;
+
+
+        system_info.disk = {
+          full:totalSpaceGB,
+          free:freeSpaceGB,
+          used:usedSpaceGB,
+          usedp: (usedSpaceGB/totalSpaceGB *100)
+        }
+      });
 
       //-------------------------------------------------
       // IP 
