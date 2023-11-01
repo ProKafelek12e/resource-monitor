@@ -19,6 +19,12 @@ wss.on("connection", function connection(ws) {
       //-------------------------------------------------
       // DISK 
       //-------------------------------------------------
+      var osUptime = os.uptime().toString()
+      system_info.uptime = osUptime.split('.')[0]
+
+      //-------------------------------------------------
+      // DISK 
+      //-------------------------------------------------
       
       const path = 'C:'; // Change the path to the drive or directory you want to check
 
